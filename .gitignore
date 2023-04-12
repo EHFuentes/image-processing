@@ -1,0 +1,11 @@
+#Client
+#
+#Server
+/server/assets
+/server/node_modules
+
+#misc
+.DS_Store
+#.env
+.idea
+README.md

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link  href="index.css" rel="stylesheet" type="text/css">
+    <title>Image Processing App</title>
+</head>
+<body>
+<h1>File Upload & Image Preview</h1>
+    <div class="drop_file_box" id="drop_zone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+        <form class="form_v" action="">
+            <img class="preview" id="preview" src="./assets/upload.webp" alt="UploadFileIcon">
+            <p>Drag one or more files to this drop zone.</p>
+            <p class ="p_class">Only .jpg, .jpeg, .png, .webp files will be processed.</p>
+        </form>
+        <div>
+            <input class="file_button" type="file" id="myFile" name="filename">
+            <input class="submit_button" type="submit">
+        </div>
+    </div>
+</body>
+</html>
