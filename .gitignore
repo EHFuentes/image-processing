@@ -1,7 +1,8 @@
 #Client
-#
+/client/node_modules
+
 #Server
-/server/assets
+/images
 /server/node_modules
 
 #misc

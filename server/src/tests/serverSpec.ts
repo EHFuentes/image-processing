@@ -9,14 +9,14 @@ const request = supertest(server);
 
 // We're creating a group of tests (a test suite) to check if our server is starting properly.
 describe('Is the Server starting..', () => {
-  // This is an individual test. It checks if the server is running when we send a request.
-  it('should be running', async () => {
-    // Sending a GET request to the root endpoint of our server and saving the response.
-    const response = await request.get('/');
+    // This is an individual test. It checks if the server is running when we send a request.
+    it('should be running', async () => {
+        // Sending a GET request to the root endpoint of our server and saving the response.
+        const response = await request.get('/');
 
-    // Check if the response status is 200 (OK)
-    expect(response.status).toEqual(200);
+        // Check if the response status is 200 (OK)
+        expect(response.status).toEqual(200);
 
-    console.log(response.text);
-  });
+        console.log(response.text);
+    });
 });
