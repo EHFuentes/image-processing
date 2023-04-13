@@ -5,15 +5,14 @@ import express from 'express';
 import resizingImage from './resizeImg';
 import { Request, Response } from 'express';
 
-const PORT = process.env.PORT || 3000;
+const PORT  = process.env.PORT|| 3000;
 
 // Middleware
 app.use('/api/images', resizingImage());
 app.use('/api/images', express.static('assets/thumbs', { maxAge: '1d' }));
 
-
 app.post('/api/images', upload.single('filename'), async (req: Request, res: Response) => {
-    res.send('Image uploaded..');
+    res.sendFile('Image uploaded..');
 });
 
 app.get('/', async (req: Request, res: Response) => {

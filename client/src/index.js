@@ -30,13 +30,11 @@ submitButton.addEventListener('click', async (event) => {
 
     // send post request to server with form data
     const response = await fetch(`http://localhost:3000/api/images?filename=${file}&width=${width}&height=${height}`, {
-        method: 'POST',
+        method: 'post',
         body: formData,
         key: 'filename',
         value: file,
     });
-
-    console.log('response', response)
 
     // Clear file input file value
     document.getElementById('myFile').value = '';
