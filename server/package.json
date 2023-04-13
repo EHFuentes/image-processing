@@ -7,10 +7,10 @@
     "watch": "nodemon src/server.ts",
     "test": "npm run build && npm run jasmine",
     "jasmine": "jasmine",
-    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write && prettier --config .prettierrc '../client/**/*.js' --write",
     "lint": "eslint . --ext .ts",
     "build": "npx tsc",
-    "start": "node build/server.js"
+    "start": "npm run build && node build/server.js"
   },
   "keywords": [],
   "author": "",

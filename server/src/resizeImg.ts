@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-// import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
 
@@ -54,7 +53,6 @@ function resizingImage() {
             // Path to the input file
             const inputFile = `${imgFolder}/${file}`;
 
-            // code is broken here - file needs to be saved to input directory
             // Sharp instance to resize the image
             const sharpInstance: sharp.Sharp = sharp(inputFile).resize(width, height, {
                 fit: sharp.fit.cover,

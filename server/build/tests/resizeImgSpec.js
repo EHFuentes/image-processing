@@ -39,22 +39,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var path_1 = __importDefault(require("path"));
 var server_1 = __importDefault(require("../server"));
 var supertest_1 = __importDefault(require("supertest"));
-// Import supertest library for testing express endpoints
+// Import superset to make requests to the server
 var request = (0, supertest_1.default)(server_1.default);
-// Describe the test suite for the image resizing function
+// Get the file path of the image to be resized - using mock image
+var filePath = '../images/fjord.jpg';
+// Get the filename from the file path
+var fileName = path_1.default.basename(filePath);
+// Test suite for image resizing
 describe('Image Resizing', function () {
-    // Test to check if image resizing was successful
     it('should resize the image successfully', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/images/').query({
-                        filename: 'fjord',
-                        width: 200,
-                        height: 200,
-                    })];
+                case 0: return [4 /*yield*/, request.post('/api/images')
+                        // with .query() method to pass the filename, width and height parameters
+                        .query({ filename: fileName, width: Number(400), height: Number(400) })
+                    // Check if the response status code is 200
+                ];
                 case 1:
                     response = _a.sent();
                     // Check if the response status code is 200
@@ -68,14 +72,11 @@ describe('Image Resizing', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/images/').query({
-                        filename: null,
-                    })];
+                case 0: return [4 /*yield*/, request.post('/api/images')
+                        .query({ filename: '', width: Number(200), height: Number(200) })];
                 case 1:
                     response = _a.sent();
-                    // Check if the response status code is 404
                     expect(response.status).toBe(404);
-                    // Check if the response text is 'No filename provided'
                     expect(response.text).toBe('No filename provided');
                     return [2 /*return*/];
             }
@@ -86,14 +87,10 @@ describe('Image Resizing', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/images/').query({
-                        filename: 'fjord',
-                        width: null,
-                        height: 200,
-                    })];
+                case 0: return [4 /*yield*/, request.post('/api/images')
+                        .query({ filename: fileName, height: Number(200) })];
                 case 1:
                     response = _a.sent();
-                    // Check if the response status code is 200
                     expect(response.status).toBe(200);
                     return [2 /*return*/];
             }
@@ -104,14 +101,10 @@ describe('Image Resizing', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/images/').query({
-                        filename: 'fjord',
-                        height: null,
-                        width: 200,
-                    })];
+                case 0: return [4 /*yield*/, request.post('/api/images')
+                        .query({ filename: fileName, width: Number(200) })];
                 case 1:
                     response = _a.sent();
-                    // Check if the response status code is 200
                     expect(response.status).toBe(200);
                     return [2 /*return*/];
             }
@@ -122,34 +115,25 @@ describe('Image Resizing', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/images/').query({
-                        filename: 'fjord',
-                        width: null,
-                        height: null,
-                    })];
+                case 0: return [4 /*yield*/, request.post('/api/images')
+                        .query({ filename: fileName })];
                 case 1:
                     response = _a.sent();
-                    // Check if the response status code is 200
                     expect(response.status).toBe(200);
                     return [2 /*return*/];
             }
         });
     }); });
-    // test to check if an error is returned for a missing filename, width and height
+    // Test to check if an error is returned for a missing filename, width and height
     it('should return an error if filename, width and height are missing', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/api/images/').query({
-                        filename: null,
-                        width: null,
-                        height: null,
-                    })];
+                case 0: return [4 /*yield*/, request.post('/api/images')
+                        .query({ filename: '' })];
                 case 1:
                     response = _a.sent();
-                    // Check if the response status code is 404
                     expect(response.status).toBe(404);
-                    // Check if the response text is 'No filename provided'
                     expect(response.text).toBe('No filename provided');
                     return [2 /*return*/];
             }

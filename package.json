@@ -1,0 +1,14 @@
+{
+  "name": "imageprocessing",
+  "version": "1.0.0",
+  "description": "This project is an image-resizing API built with Express, Sharp, and TypeScript. It provides a simple way to  resize images on the fly.",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run start-backend & npm run start-frontend",
+    "start-backend": "cd server && npm run start",
+    "start-frontend":"cd client && npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

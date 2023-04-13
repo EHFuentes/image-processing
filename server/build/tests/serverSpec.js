@@ -39,25 +39,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// First, we're importing the 'app' from our server file so we can use it for testing.
 var server_1 = __importDefault(require("../server"));
-// Next, we need to import 'supertest' so we can send test HTTP requests to our server.
 var supertest_1 = __importDefault(require("supertest"));
-// Now, we'll create a 'request' variable. We'll use this to send test requests to our 'app'.
+var node_test_1 = require("node:test");
+// Create a request variable to use in our tests.
 var request = (0, supertest_1.default)(server_1.default);
-// We're creating a group of tests (a test suite) to check if our server is starting properly.
-describe('Is the Server starting..', function () {
-    // This is an individual test. It checks if the server is running when we send a request.
-    it('should be running', function () { return __awaiter(void 0, void 0, void 0, function () {
+// Test suite for the server.
+(0, node_test_1.describe)('Server', function () {
+    // Testing if the server is starting properly.
+    it('should start', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request.get('/')];
                 case 1:
                     response = _a.sent();
-                    // Check if the response status is 200 (OK)
-                    expect(response.status).toEqual(200);
-                    console.log(response.text);
+                    expect(response.status).toBe(200);
+                    expect(response.text).toBe('Server started.');
                     return [2 /*return*/];
             }
         });

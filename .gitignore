@@ -4,6 +4,8 @@
 #Server
 /images
 /server/node_modules
+/server/.env
+/server/src/tests/fjord.jpg
 
 #misc
 .DS_Store

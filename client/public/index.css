@@ -40,13 +40,21 @@ img {
     border-radius: 10px;
 }
 
-.form_v {
+.dimensions {
+    display:flex;
+    width: 400px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.form {
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 500px;
+    height: 300px;
+    border-radius: 5px;
 }
 
 .p_class {
@@ -73,10 +81,17 @@ img {
     color: black;
     padding: 15px 32px;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 4px 0 15px 0;
     border-radius: 3px;
 }
 
 #drop_zone {
-  border: 2px dashed #93c5fd;
+    background-color: #e6e7ec;
+    color: #b5b5b5;
+    padding: 18px 32px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 4px 2px 15px 2px;
+    border-radius: 5px;
+    align-items: end;
 }

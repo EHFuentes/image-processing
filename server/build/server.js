@@ -41,60 +41,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var app_1 = __importDefault(require("./app"));
 var http_1 = __importDefault(require("http"));
+var uploads_1 = __importDefault(require("./uploads"));
 var express_1 = __importDefault(require("express"));
 var resizeImg_1 = __importDefault(require("./resizeImg"));
-var multer_1 = __importDefault(require("multer"));
-// const PORT = Number(process.env.PORT) || 3000;
-var PORT = Number(3000);
-// ------------------ Multer ------------------ //
-// multer middleware to upload images
-var fileStorage = multer_1.default.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, '../../server/assets');
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-});
-var upload = (0, multer_1.default)({ storage: fileStorage });
-// ------------------ Express ------------------ //
+var PORT = process.env.PORT || 3000;
 // Middleware
 app_1.default.use('/api/images', (0, resizeImg_1.default)());
 app_1.default.use('/api/images', express_1.default.static('assets/thumbs', { maxAge: '1d' }));
-app_1.default.get('/api/images', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app_1.default.post('/api/images', uploads_1.default.single('filename'), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, res.send('Server started.')];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        res.send('Image uploaded..');
+        return [2 /*return*/];
     });
 }); });
-app_1.default.post('api/images', upload.single('filename'), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app_1.default.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, res.sendFile('Image uploaded..')];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+        res.send('Server started.');
+        return [2 /*return*/];
     });
 }); });
 // Server instance to use http module to create a server
 var server = http_1.default.createServer(app_1.default);
 // function to start the server
 function startServer() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            server.listen(PORT, function () {
-                console.log("Server started @ http://localhost:".concat(PORT, "/api/images"));
-            });
-            return [2 /*return*/];
-        });
+    server.listen(PORT, function () {
+        console.log("Server started @ http://localhost:".concat(PORT, "/api/images"));
     });
 }
 // Instantiate the server
 startServer();
-// Export for testing
-exports.default = app_1.default;
+exports.default = server;

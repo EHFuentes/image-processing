@@ -39,15 +39,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// import fs from 'fs';
 var path_1 = __importDefault(require("path"));
 var sharp_1 = __importDefault(require("sharp"));
 function resizingImage() {
     var _this = this;
     // Create a new Map to store the cache
     var imageCache = new Map();
-    // Return a function that takes in a request and response from validateInput()
-    return function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+    return function (req, res) { return __awaiter(_this, void 0, void 0, function () {
         var cacheKey, file, _a, name, ext, width, height, imgFolder, outputFile, inputFile, sharpInstance, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
@@ -60,11 +58,8 @@ function resizingImage() {
                         res.sendFile(imageCache.get(cacheKey));
                         return [2 /*return*/];
                     }
-                    console.log('\nResizingImage middleware called');
                     file = String(req.query.filename);
                     _a = file.split('.'), name = _a[0], ext = _a[1];
-                    console.log("Name: ".concat(name));
-                    console.log("Extension: ".concat(ext));
                     width = Number(req.query.width) || Number(200);
                     height = Number(req.query.height) || Number(200);
                     // Check if filename is missing
@@ -85,7 +80,7 @@ function resizingImage() {
                     _b.label = 1;
                 case 1:
                     _b.trys.push([1, 12, , 13]);
-                    outputFile = ("".concat(imgFolder, "/thumb/").concat(name, "-").concat(width, "x").concat(height, ".").concat(ext));
+                    outputFile = "".concat(imgFolder, "/thumb/").concat(name, "-").concat(width, "x").concat(height, ".").concat(ext);
                     inputFile = "".concat(imgFolder, "/").concat(file);
                     sharpInstance = (0, sharp_1.default)(inputFile).resize(width, height, {
                         fit: sharp_1.default.fit.cover,
@@ -95,7 +90,6 @@ function resizingImage() {
                     return [4 /*yield*/, sharpInstance.jpeg().sharpen().toFile(outputFile)];
                 case 2:
                     _b.sent();
-                    console.log(outputFile, 'from extension check ');
                     return [3 /*break*/, 10];
                 case 3:
                     if (!(ext === 'jpeg')) return [3 /*break*/, 5];
@@ -118,10 +112,9 @@ function resizingImage() {
                 case 9:
                     console.error("Error: ".concat(ext, " is an unsupported file format"));
                     res.status(404).send("Error: ".concat(ext, " is an unsupported file format"));
-                    // Return to stop the middleware from running
                     return [2 /*return*/];
                 case 10:
-                    // Log the image width, height and format
+                    // Log the image details after resizing
                     console.log("Image Resized!\nWidth: ".concat(width, "px\nHeight: ").concat(height, "px\nFormat: ").concat(ext));
                     // Add the image to the cache
                     return [4 /*yield*/, imageCache.set(cacheKey, outputFile)];
@@ -130,18 +123,14 @@ function resizingImage() {
                     _b.sent();
                     // Send the image to the client
                     res.sendFile(outputFile);
-                    // Log the image has been added to the cache and the middleware has finished
                     console.log('Image added to cache..');
-                    // Return to stop the middleware from running
                     return [2 /*return*/];
                 case 12:
                     error_1 = _b.sent();
                     console.error('Error resizing image:', error_1);
                     res.status(404).send('Error resizing image');
                     return [2 /*return*/];
-                case 13:
-                    next();
-                    return [2 /*return*/];
+                case 13: return [2 /*return*/];
             }
         });
     }); };
