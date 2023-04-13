@@ -139,4 +139,21 @@ describe('Image Resizing', function () {
             }
         });
     }); });
+    // test if the image is posted successfully
+    it('should post the image successfully', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.post('/api/images')
+                        .query({ filename: fileName, width: Number(400), height: Number(400) })
+                    // expect(response.status).toBe(200);
+                ];
+                case 1:
+                    response = _a.sent();
+                    // expect(response.status).toBe(200);
+                    expect(response.text).toBe('Image uploaded..');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
 });

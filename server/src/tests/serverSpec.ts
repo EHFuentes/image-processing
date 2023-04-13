@@ -1,6 +1,6 @@
 import server from '../server';
 import supertest from 'supertest';
-import {describe} from "node:test";
+import { describe } from 'node:test';
 
 // Create a request variable to use in our tests.
 const request = supertest(server);
