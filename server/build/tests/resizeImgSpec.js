@@ -54,11 +54,10 @@ describe('Image Resizing', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.post('/api/images')
+                case 0: return [4 /*yield*/, request
+                        .post('/api/images')
                         // with .query() method to pass the filename, width and height parameters
-                        .query({ filename: fileName, width: Number(400), height: Number(400) })
-                    // Check if the response status code is 200
-                ];
+                        .query({ filename: fileName, width: Number(400), height: Number(400) })];
                 case 1:
                     response = _a.sent();
                     // Check if the response status code is 200
@@ -72,7 +71,8 @@ describe('Image Resizing', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.post('/api/images')
+                case 0: return [4 /*yield*/, request
+                        .post('/api/images')
                         .query({ filename: '', width: Number(200), height: Number(200) })];
                 case 1:
                     response = _a.sent();
@@ -87,8 +87,7 @@ describe('Image Resizing', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.post('/api/images')
-                        .query({ filename: fileName, height: Number(200) })];
+                case 0: return [4 /*yield*/, request.post('/api/images').query({ filename: fileName, height: Number(200) })];
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(200);
@@ -101,8 +100,7 @@ describe('Image Resizing', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.post('/api/images')
-                        .query({ filename: fileName, width: Number(200) })];
+                case 0: return [4 /*yield*/, request.post('/api/images').query({ filename: fileName, width: Number(200) })];
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(200);
@@ -115,8 +113,7 @@ describe('Image Resizing', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.post('/api/images')
-                        .query({ filename: fileName })];
+                case 0: return [4 /*yield*/, request.post('/api/images').query({ filename: fileName })];
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(200);
@@ -129,29 +126,11 @@ describe('Image Resizing', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.post('/api/images')
-                        .query({ filename: '' })];
+                case 0: return [4 /*yield*/, request.post('/api/images').query({ filename: '' })];
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(404);
                     expect(response.text).toBe('No filename provided');
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    // test if the image is posted successfully
-    it('should post the image successfully', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, request.post('/api/images')
-                        .query({ filename: fileName, width: Number(400), height: Number(400) })
-                    // expect(response.status).toBe(200);
-                ];
-                case 1:
-                    response = _a.sent();
-                    // expect(response.status).toBe(200);
-                    expect(response.text).toBe('Image uploaded..');
                     return [2 /*return*/];
             }
         });

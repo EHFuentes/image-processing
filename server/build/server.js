@@ -41,19 +41,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var app_1 = __importDefault(require("./app"));
 var http_1 = __importDefault(require("http"));
-var uploads_1 = __importDefault(require("./uploads"));
 var express_1 = __importDefault(require("express"));
 var resizeImg_1 = __importDefault(require("./resizeImg"));
 var PORT = process.env.PORT || 3000;
 // Middleware
 app_1.default.use('/api/images', (0, resizeImg_1.default)());
 app_1.default.use('/api/images', express_1.default.static('assets/thumbs', { maxAge: '1d' }));
-app_1.default.post('/api/images', uploads_1.default.single('filename'), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        res.sendFile('Image uploaded..');
-        return [2 /*return*/];
-    });
-}); });
 app_1.default.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         res.send('Server started.');
