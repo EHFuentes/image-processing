@@ -1,6 +1,10 @@
 import path from 'path';
+import sharp from 'sharp';
 import server from '../server';
 import supertest from 'supertest';
+import {resizeImage} from "../imageResizing";
+
+
 
 // Import superset to make requests to the server
 const request = supertest(server);
@@ -57,5 +61,27 @@ describe('Image Resizing', () => {
         const response = await request.post('/api/images').query({ filename: '' });
         expect(response.status).toBe(404);
         expect(response.text).toBe('No filename provided');
+    });
+});
+
+
+// Create a test case for the function.
+describe('Testing resizeImage function', () => {
+    it('should resize an image to 200px X 200px', async () => {
+
+        // Get the image to be resized
+        const inputFile = '../images/fjord.jpg';
+
+        // Output file path for the resized image
+            const outputFile = '../images/fjord-resized.jpg';
+
+        // Call the resizeImage function to resize the image
+        await resizeImage(inputFile, outputFile, 200, 200, 'jpg');
+
+        // Get the metadata of the resized image and check if the width is 200 pixels
+        const resizedImage = await sharp(outputFile).metadata();
+        expect(resizedImage.width).toBe(200);
+        expect(resizedImage.height).toBe(200);
+        expect(resizedImage.format).toBe('jpeg');
     });
 });

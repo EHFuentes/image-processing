@@ -36,6 +36,10 @@ The application is tested using Jasmine and Supertest.
 To test an image it needs to be in the test directory. The test will resize the image and save it in the thumb folder.
 To run the test, run npm test from the server directory.
 
+If testing with url and not the front end the file extension must be included in the url.
+
+e.g. ```http://localhost:3000/api/images?filename=fjord.jpg```
+
 ## Dependencies
 - @types/cors - ^2.8.13
 - cors - ^2.8.5",
