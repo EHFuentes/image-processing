@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
 import path from 'path';
+import { Request, Response } from 'express';
 import { resizeImage } from './imageResizing';
 
 function resizingImage() {

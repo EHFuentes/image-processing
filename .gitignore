@@ -2,7 +2,6 @@
 /client/node_modules
 
 #Server
-/images
 /server/node_modules
 /server/.env
 /server/src/tests/fjord.jpg

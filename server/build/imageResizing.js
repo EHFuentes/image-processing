@@ -39,28 +39,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var app_1 = __importDefault(require("./app"));
-var http_1 = __importDefault(require("http"));
-var express_1 = __importDefault(require("express"));
-var inputValidation_1 = __importDefault(require("./inputValidation"));
-var PORT = process.env.PORT || 3000;
-// Middleware
-app_1.default.use('/api/images', (0, inputValidation_1.default)());
-app_1.default.use('/api/images', express_1.default.static('assets/thumbs', { maxAge: '1d' }));
-app_1.default.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        res.send('Server started.');
-        return [2 /*return*/];
-    });
-}); });
-// Server instance to use http module to create a server
-var server = http_1.default.createServer(app_1.default);
-// function to start the server
-function startServer() {
-    server.listen(PORT, function () {
-        console.log("Server started @ http://localhost:".concat(PORT, "/api/images"));
+exports.resizeImage = void 0;
+var sharp_1 = __importDefault(require("sharp"));
+function resizeImage(inputFile, outputFile, width, height, ext) {
+    return __awaiter(this, void 0, void 0, function () {
+        var sharpInstance;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    sharpInstance = (0, sharp_1.default)(inputFile).resize(width, height, {
+                        fit: sharp_1.default.fit.cover,
+                        withoutEnlargement: true,
+                    });
+                    if (!(ext === 'jpg')) return [3 /*break*/, 2];
+                    return [4 /*yield*/, sharpInstance.jpeg().sharpen().toFile(outputFile)];
+                case 1:
+                    _a.sent();
+                    return [3 /*break*/, 9];
+                case 2:
+                    if (!(ext === 'jpeg')) return [3 /*break*/, 4];
+                    return [4 /*yield*/, sharpInstance.jpeg().sharpen().toFile(outputFile)];
+                case 3:
+                    _a.sent();
+                    return [3 /*break*/, 9];
+                case 4:
+                    if (!(ext === 'png')) return [3 /*break*/, 6];
+                    return [4 /*yield*/, sharpInstance.png().sharpen().toFile(outputFile)];
+                case 5:
+                    _a.sent();
+                    return [3 /*break*/, 9];
+                case 6:
+                    if (!(ext === 'webp')) return [3 /*break*/, 8];
+                    return [4 /*yield*/, sharpInstance.webp().sharpen().toFile(outputFile)];
+                case 7:
+                    _a.sent();
+                    return [3 /*break*/, 9];
+                case 8: throw new Error("Error: ".concat(ext, " is an unsupported file format"));
+                case 9: return [2 /*return*/];
+            }
+        });
     });
 }
-// Instantiate the server
-startServer();
-exports.default = server;
+exports.resizeImage = resizeImage;
