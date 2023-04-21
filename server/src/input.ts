@@ -1,5 +1,6 @@
 import path from 'path';
 import { Request, Response } from 'express';
+import { validateInput } from './validation';
 import { resizeImage } from './imageResizing';
 
 function resizingImage() {
@@ -21,22 +22,17 @@ function resizingImage() {
         // Get the filename, width and height from the request query
         const file = String(req.query.filename);
 
-        // Destructuring the file name and extension
+        // Destructuring the file name and extension - add absolute numbers
         const [name, ext] = file.split('.');
-        const width = Number(req.query.width) || Number(200);
-        const height = Number(req.query.height) || Number(200);
+        const width = Math.abs(Number(req.query.width));
+        const height = Math.abs(Number(req.query.height));
 
-        // Check if filename is missing
-        if (!file) {
-            res.status(404).send('No filename provided');
-            console.log('No filename provided');
-            return;
-        }
+        // Call validateInput function
+        const validationResult = await validateInput(width, height, file, ext);
 
-        // Check if width and height are numbers
-        if (!Number(width) || !Number(height)) {
-            res.status(404).send('Width and height are not numbers');
-            console.log('Width and height are not numbers');
+        if (validationResult) {
+            console.error(validationResult);
+            res.status(404).send(validationResult);
             return;
         }
 
@@ -52,6 +48,7 @@ function resizingImage() {
         // Path to the input file
         const inputFile = `${imgFolder}/${file}`;
 
+        // Call resizeImage function
         try {
             await resizeImage(inputFile, outputFile, width, height, ext);
 
@@ -62,7 +59,7 @@ function resizingImage() {
             await imageCache.set(cacheKey, outputFile);
 
             // Send the image to the client
-            res.sendFile(outputFile);
+            res.send(outputFile);
             console.log('Image added to cache..');
             return;
         } catch (error) {

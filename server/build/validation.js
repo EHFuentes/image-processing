@@ -35,32 +35,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var app_1 = __importDefault(require("./app"));
-var http_1 = __importDefault(require("http"));
-var express_1 = __importDefault(require("express"));
-var input_1 = __importDefault(require("./input"));
-var PORT = process.env.PORT || 3000;
-// Middleware
-app_1.default.use('/api/images', (0, input_1.default)());
-app_1.default.use('/api/images', express_1.default.static('assets/thumbs', { maxAge: '1d' }));
-app_1.default.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        res.send('Server started.');
-        return [2 /*return*/];
-    });
-}); });
-// Server instance to use http module to create a server
-var server = http_1.default.createServer(app_1.default);
-// function to start the server
-function startServer() {
-    server.listen(PORT, function () {
-        console.log("Server started @ http://localhost:".concat(PORT, "/api/images"));
+exports.validateInput = void 0;
+function validateInput(width, height, file, ext) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            if (file === '' || file === null || file === undefined) {
+                return [2 /*return*/, 'No filename provided'];
+            }
+            if (ext !== 'jpg' && ext !== 'jpeg' && ext !== 'png' && ext !== 'webp') {
+                return [2 /*return*/, 'File extension must be jpg, jpeg, png or webp'];
+            }
+            if (width === 0 || width === undefined || width === null || !Number(width)) {
+                console.log('Check the width of the file');
+                return [2 /*return*/, 'Check the width of the file'];
+            }
+            if (height === 0 || height === undefined || height === null || !Number(height)) {
+                return [2 /*return*/, 'Check the height of the file'];
+            }
+            return [2 /*return*/];
+        });
     });
 }
-// Instantiate the server
-startServer();
-exports.default = server;
+exports.validateInput = validateInput;

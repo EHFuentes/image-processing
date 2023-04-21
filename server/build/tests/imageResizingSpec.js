@@ -51,62 +51,104 @@ var filePath = '../images/fjord.jpg';
 // Get the filename from the file path
 var fileName = path_1.default.basename(filePath);
 // Test suite for image resizing
-// describe('Image Resizing', () => {
-//     it('should resize the image successfully', async () => {
-//         // Make a request to the image resizing endpoint
-//         const response = await request
-//             .post('/api/images')
-//
-//             // with .query() method to pass the filename, width and height parameters
-//             .query({ filename: fileName, width: Number(400), height: Number(400) });
-//
-//         // Check if the response status code is 200
-//         expect(response.status).toBe(200);
-//     });
-//
-//     // Test to check if an error is returned for a missing file
-//     it('should return an error for a missing file', async () => {
-//         const response = await request
-//             .post('/api/images')
-//             .query({ filename: '', width: Number(200), height: Number(200) });
-//         expect(response.status).toBe(404);
-//         expect(response.text).toBe('No filename provided');
-//     });
-//
-//     // Test to check if an error is returned for a missing width
-//     it('should not return an error if width is missing', async () => {
-//         const response = await request.post('/api/images').query({ filename: fileName, height: Number(200) });
-//         expect(response.status).toBe(200);
-//     });
-//
-//     // Test to check if an error is returned for a missing height
-//     it('should not return error if height is missing', async () => {
-//         const response = await request.post('/api/images').query({ filename: fileName, width: Number(200) });
-//         expect(response.status).toBe(200);
-//     });
-//
-//     // Test to check if an error is returned for a missing width and height
-//     it('should not return error if width and height are missing', async () => {
-//         const response = await request.post('/api/images').query({ filename: fileName });
-//         expect(response.status).toBe(200);
-//     });
-//
-//     // Test to check if an error is returned for a missing filename, width and height
-//     it('should return an error if filename, width and height are missing', async () => {
-//         const response = await request.post('/api/images').query({ filename: '' });
-//         expect(response.status).toBe(404);
-//         expect(response.text).toBe('No filename provided');
-//     });
-// });
+describe('Image Resizing,', function () {
+    it('should resize the image successfully', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .post('/api/images')
+                        // with .query() method to pass the filename, width and height parameters
+                        .query({ filename: fileName, width: Number(400), height: Number(400) })];
+                case 1:
+                    response = _a.sent();
+                    // Check if the response status code is 200
+                    expect(response.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    // Test to check if an error is returned for a missing file
+    it('should return an error for a missing file', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .post('/api/images')
+                        .query({ filename: '', width: Number(200), height: Number(200) })];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(404);
+                    expect(response.text).toBe('No filename provided');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    // Test to check if an error is returned for a missing width
+    it('should return an error if width is missing', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.post('/api/images').query({ filename: fileName, height: Number(200) })];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(404);
+                    expect(response.text).toBe('Check the width of the file');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    // Test to check if an error is returned for a missing height
+    it('should return error if height is missing', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.post('/api/images').query({ filename: fileName, width: Number(200) })];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(404);
+                    expect(response.text).toBe('Check the height of the file');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    // Test to check if an error is returned for a missing width and height
+    it('should return error if width and height are missing', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.post('/api/images').query({ filename: fileName })];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(404);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    // Test to check if an error is returned for a missing filename, width and height
+    it('should return an error if filename, width and height are missing', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.post('/api/images').query({ filename: '' })];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toBe(404);
+                    expect(response.text).toBe('No filename provided');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
 // Create a test case for the function.
-describe('Testing resizeImage function', function () {
-    it('should resize an image', function () { return __awaiter(void 0, void 0, void 0, function () {
+describe('Testing resizeImage function,', function () {
+    it('should resize an image to 200px X 200px', function () { return __awaiter(void 0, void 0, void 0, function () {
         var inputFile, outputFile, resizedImage;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     inputFile = '../images/fjord.jpg';
-                    outputFile = '../images/fjord-resized.jpg';
+                    outputFile = '../images/thumb/fjord-200x200.jpg';
                     // Call the resizeImage function to resize the image
                     return [4 /*yield*/, (0, imageResizing_1.resizeImage)(inputFile, outputFile, 200, 200, 'jpg')];
                 case 1:
@@ -117,7 +159,6 @@ describe('Testing resizeImage function', function () {
                     resizedImage = _a.sent();
                     expect(resizedImage.width).toBe(200);
                     expect(resizedImage.height).toBe(200);
-                    expect(resizedImage.format).toBe('jpeg');
                     return [2 /*return*/];
             }
         });

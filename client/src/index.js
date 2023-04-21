@@ -28,8 +28,11 @@ submitButton.addEventListener('click', async (event) => {
     // append file to form data from file input and send to server
     formData.append('filename', file);
 
+    // Url to send post request to
+    const url = `http://localhost:3000/api/images?filename=${file}&width=${width}&height=${height}`;
+
     // send post request to server with form data
-    const response = await fetch(`http://localhost:3000/api/images?filename=${file}&width=${width}&height=${height}`, {
+    const response = await fetch(url, {
         method: 'post',
         body: formData,
         key: 'filename',

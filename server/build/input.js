@@ -39,14 +39,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.height = exports.width = exports.outputFile = exports.inputFile = exports.ext = void 0;
-var sizing_1 = __importDefault(require("./sizing"));
+var path_1 = __importDefault(require("path"));
+var validation_1 = require("./validation");
+var imageResizing_1 = require("./imageResizing");
 function resizingImage() {
     var _this = this;
     // Create a new Map to store the cache
     var imageCache = new Map();
     return function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-        var cacheKey, file, _a, name, ext, width, height;
+        var cacheKey, file, _a, name, ext, width, height, validationResult, imgFolder, outputFile, inputFile, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -60,18 +61,44 @@ function resizingImage() {
                     }
                     file = String(req.query.filename);
                     _a = file.split('.'), name = _a[0], ext = _a[1];
-                    width = Number(req.query.width) || Number(200);
-                    height = Number(req.query.height) || Number(200);
-                    // Check if filename is missing
-                    if (!file) {
-                        res.status(404).send('No filename provided');
-                        console.log('No filename provided');
+                    width = Math.abs(Number(req.query.width));
+                    height = Math.abs(Number(req.query.height));
+                    return [4 /*yield*/, (0, validation_1.validateInput)(width, height, file, ext)];
+                case 1:
+                    validationResult = _b.sent();
+                    if (validationResult) {
+                        console.error(validationResult);
+                        res.status(404).send(validationResult);
                         return [2 /*return*/];
                     }
-                    return [4 /*yield*/, (0, sizing_1.default)()];
-                case 1:
+                    imgFolder = path_1.default.join(__dirname, '../../images');
+                    // Log file name and extension
+                    console.log("Filename: ".concat(name, ".").concat(ext));
+                    outputFile = "".concat(imgFolder, "/thumb/").concat(name, "-").concat(width, "x").concat(height, ".").concat(ext);
+                    inputFile = "".concat(imgFolder, "/").concat(file);
+                    _b.label = 2;
+                case 2:
+                    _b.trys.push([2, 5, , 6]);
+                    return [4 /*yield*/, (0, imageResizing_1.resizeImage)(inputFile, outputFile, width, height, ext)];
+                case 3:
                     _b.sent();
+                    // Log the image details after resizing
+                    console.log("Image Resized!\nWidth: ".concat(width, "px\nHeight: ").concat(height, "px\nFormat: ").concat(ext));
+                    // Add the image to the cache
+                    return [4 /*yield*/, imageCache.set(cacheKey, outputFile)];
+                case 4:
+                    // Add the image to the cache
+                    _b.sent();
+                    // Send the image to the client
+                    res.send(outputFile);
+                    console.log('Image added to cache..');
                     return [2 /*return*/];
+                case 5:
+                    error_1 = _b.sent();
+                    console.error('Error resizing image:', error_1);
+                    res.status(404).send('Error resizing image');
+                    return [2 /*return*/];
+                case 6: return [2 /*return*/];
             }
         });
     }); };

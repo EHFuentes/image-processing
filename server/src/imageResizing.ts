@@ -1,4 +1,5 @@
 import sharp from 'sharp';
+import { Sharp } from 'sharp';
 
 export async function resizeImage(
     inputFile: string,
@@ -13,15 +14,20 @@ export async function resizeImage(
         withoutEnlargement: true,
     });
 
-    // Convert image to correct file format and save to output file
-    if (ext === 'jpg') {
-        await sharpInstance.jpeg().sharpen().toFile(outputFile);
-    } else if (ext === 'jpeg') {
-        await sharpInstance.jpeg().sharpen().toFile(outputFile);
-    } else if (ext === 'png') {
-        await sharpInstance.png().sharpen().toFile(outputFile);
-    } else if (ext === 'webp') {
-        await sharpInstance.webp().sharpen().toFile(outputFile);
+    // Object containing the file formats
+    const fileFormats: Record<string, Sharp> = {
+        jpg: sharpInstance.jpeg().sharpen(),
+        jpeg: sharpInstance.jpeg().sharpen(),
+        png: sharpInstance.png().sharpen(),
+        webp: sharpInstance.webp().sharpen(),
+    };
+
+    // Check if the file format is supported
+    const format = fileFormats[ext];
+
+    // If the file format is supported, resize the image
+    if (format) {
+        await format.toFile(outputFile);
     } else {
         throw new Error(`Error: ${ext} is an unsupported file format`);
     }

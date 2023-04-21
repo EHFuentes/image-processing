@@ -23,14 +23,6 @@ p {
     width: 700px;
 }
 
-img {
-    opacity: 0.1;
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
-    width: 80px;
-}
-
 .drop_file_box{
     background-color: #ffffff;
     display: grid;
@@ -69,7 +61,7 @@ img {
     padding: 18px 32px;
     font-size: 16px;
     font-weight: bold;
-    margin: 4px 2px 15px 2px;
+    margin: 4px 2px 20px 2px;
     cursor: pointer;
     border-radius: 3px;
     align-items: end;

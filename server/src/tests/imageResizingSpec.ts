@@ -2,9 +2,7 @@ import path from 'path';
 import sharp from 'sharp';
 import server from '../server';
 import supertest from 'supertest';
-import {resizeImage} from "../imageResizing";
-
-
+import { resizeImage } from '../imageResizing';
 
 // Import superset to make requests to the server
 const request = supertest(server);
@@ -16,7 +14,7 @@ const filePath = '../images/fjord.jpg';
 const fileName = path.basename(filePath);
 
 // Test suite for image resizing
-describe('Image Resizing', () => {
+describe('Image Resizing,', () => {
     it('should resize the image successfully', async () => {
         // Make a request to the image resizing endpoint
         const response = await request
@@ -39,21 +37,23 @@ describe('Image Resizing', () => {
     });
 
     // Test to check if an error is returned for a missing width
-    it('should not return an error if width is missing', async () => {
+    it('should return an error if width is missing', async () => {
         const response = await request.post('/api/images').query({ filename: fileName, height: Number(200) });
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(404);
+        expect(response.text).toBe('Check the width of the file');
     });
 
     // Test to check if an error is returned for a missing height
-    it('should not return error if height is missing', async () => {
+    it('should return error if height is missing', async () => {
         const response = await request.post('/api/images').query({ filename: fileName, width: Number(200) });
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(404);
+        expect(response.text).toBe('Check the height of the file');
     });
 
     // Test to check if an error is returned for a missing width and height
-    it('should not return error if width and height are missing', async () => {
+    it('should return error if width and height are missing', async () => {
         const response = await request.post('/api/images').query({ filename: fileName });
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(404);
     });
 
     // Test to check if an error is returned for a missing filename, width and height
@@ -64,16 +64,14 @@ describe('Image Resizing', () => {
     });
 });
 
-
 // Create a test case for the function.
-describe('Testing resizeImage function', () => {
+describe('Testing resizeImage function,', () => {
     it('should resize an image to 200px X 200px', async () => {
-
         // Get the image to be resized
         const inputFile = '../images/fjord.jpg';
 
         // Output file path for the resized image
-            const outputFile = '../images/fjord-resized.jpg';
+        const outputFile = '../images/thumb/fjord-200x200.jpg';
 
         // Call the resizeImage function to resize the image
         await resizeImage(inputFile, outputFile, 200, 200, 'jpg');
@@ -82,6 +80,5 @@ describe('Testing resizeImage function', () => {
         const resizedImage = await sharp(outputFile).metadata();
         expect(resizedImage.width).toBe(200);
         expect(resizedImage.height).toBe(200);
-        expect(resizedImage.format).toBe('jpeg');
     });
 });

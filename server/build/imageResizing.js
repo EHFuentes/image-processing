@@ -43,7 +43,7 @@ exports.resizeImage = void 0;
 var sharp_1 = __importDefault(require("sharp"));
 function resizeImage(inputFile, outputFile, width, height, ext) {
     return __awaiter(this, void 0, void 0, function () {
-        var sharpInstance;
+        var sharpInstance, fileFormats, format;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -51,31 +51,20 @@ function resizeImage(inputFile, outputFile, width, height, ext) {
                         fit: sharp_1.default.fit.cover,
                         withoutEnlargement: true,
                     });
-                    if (!(ext === 'jpg')) return [3 /*break*/, 2];
-                    return [4 /*yield*/, sharpInstance.jpeg().sharpen().toFile(outputFile)];
+                    fileFormats = {
+                        jpg: sharpInstance.jpeg().sharpen(),
+                        jpeg: sharpInstance.jpeg().sharpen(),
+                        png: sharpInstance.png().sharpen(),
+                        webp: sharpInstance.webp().sharpen(),
+                    };
+                    format = fileFormats[ext];
+                    if (!format) return [3 /*break*/, 2];
+                    return [4 /*yield*/, format.toFile(outputFile)];
                 case 1:
                     _a.sent();
-                    return [3 /*break*/, 9];
-                case 2:
-                    if (!(ext === 'jpeg')) return [3 /*break*/, 4];
-                    return [4 /*yield*/, sharpInstance.jpeg().sharpen().toFile(outputFile)];
-                case 3:
-                    _a.sent();
-                    return [3 /*break*/, 9];
-                case 4:
-                    if (!(ext === 'png')) return [3 /*break*/, 6];
-                    return [4 /*yield*/, sharpInstance.png().sharpen().toFile(outputFile)];
-                case 5:
-                    _a.sent();
-                    return [3 /*break*/, 9];
-                case 6:
-                    if (!(ext === 'webp')) return [3 /*break*/, 8];
-                    return [4 /*yield*/, sharpInstance.webp().sharpen().toFile(outputFile)];
-                case 7:
-                    _a.sent();
-                    return [3 /*break*/, 9];
-                case 8: throw new Error("Error: ".concat(ext, " is an unsupported file format"));
-                case 9: return [2 /*return*/];
+                    return [3 /*break*/, 3];
+                case 2: throw new Error("Error: ".concat(ext, " is an unsupported file format"));
+                case 3: return [2 /*return*/];
             }
         });
     });
