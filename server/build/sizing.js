@@ -39,41 +39,63 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.height = exports.width = exports.outputFile = exports.inputFile = exports.ext = void 0;
-var sizing_1 = __importDefault(require("./sizing"));
-function resizingImage() {
-    var _this = this;
-    // Create a new Map to store the cache
-    var imageCache = new Map();
-    return function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-        var cacheKey, file, _a, name, ext, width, height;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+var sharp_1 = __importDefault(require("sharp"));
+var resizeImg_1 = require("./resizeImg");
+// import ext from './resizeImg';
+// import inputFile from './resizeImg';
+// import outputFile from './resizeImg';
+// import width from './resizeImg';
+// import height from './resizeImg';
+function imageProcessing() {
+    return __awaiter(this, void 0, void 0, function () {
+        var sharpInstance, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
-                    cacheKey = "".concat(req.query.filename, "-").concat(req.query.width, "-").concat(req.query.height);
-                    // Check if the cache has the image
-                    if (imageCache.has(cacheKey)) {
-                        console.log("Image served from cache..");
-                        // Get image from cache and send to client
-                        res.sendFile(imageCache.get(cacheKey));
-                        return [2 /*return*/];
-                    }
-                    file = String(req.query.filename);
-                    _a = file.split('.'), name = _a[0], ext = _a[1];
-                    width = Number(req.query.width) || Number(200);
-                    height = Number(req.query.height) || Number(200);
-                    // Check if filename is missing
-                    if (!file) {
-                        res.status(404).send('No filename provided');
-                        console.log('No filename provided');
-                        return [2 /*return*/];
-                    }
-                    return [4 /*yield*/, (0, sizing_1.default)()];
+                    sharpInstance = (0, sharp_1.default)(resizeImg_1.inputFile).resize(resizeImg_1.width, resizeImg_1.height, {
+                        fit: sharp_1.default.fit.cover,
+                        withoutEnlargement: true,
+                    });
+                    _a.label = 1;
                 case 1:
-                    _b.sent();
-                    return [2 /*return*/];
+                    _a.trys.push([1, 11, , 12]);
+                    if (!(resizeImg_1.ext === 'jpg')) return [3 /*break*/, 3];
+                    return [4 /*yield*/, sharpInstance.jpeg().sharpen().toFile(resizeImg_1.outputFile)];
+                case 2:
+                    _a.sent();
+                    return [3 /*break*/, 10];
+                case 3:
+                    if (!(resizeImg_1.ext === 'jpeg')) return [3 /*break*/, 5];
+                    return [4 /*yield*/, sharpInstance.jpeg().sharpen().toFile(resizeImg_1.outputFile)];
+                case 4:
+                    _a.sent();
+                    return [3 /*break*/, 10];
+                case 5:
+                    if (!(resizeImg_1.ext === 'png')) return [3 /*break*/, 7];
+                    return [4 /*yield*/, sharpInstance.png().sharpen().toFile(resizeImg_1.outputFile)];
+                case 6:
+                    _a.sent();
+                    return [3 /*break*/, 10];
+                case 7:
+                    if (!(resizeImg_1.ext === 'webp')) return [3 /*break*/, 9];
+                    return [4 /*yield*/, sharpInstance.webp().sharpen().toFile(resizeImg_1.outputFile)];
+                case 8:
+                    _a.sent();
+                    return [3 /*break*/, 10];
+                case 9:
+                    console.error("Error: ".concat(resizeImg_1.ext, " is an unsupported file format"));
+                    return [2 /*return*/, false];
+                case 10:
+                    // Log the image details after resizing
+                    console.log("Image Resized!\nWidth: ".concat(resizeImg_1.width, "px\nHeight: ").concat(resizeImg_1.height, "px\nFormat: ").concat(resizeImg_1.ext));
+                    return [2 /*return*/, true];
+                case 11:
+                    error_1 = _a.sent();
+                    console.error('Error resizing image:', error_1);
+                    return [2 /*return*/, false];
+                case 12: return [2 /*return*/];
             }
         });
-    }); };
+    });
 }
-exports.default = resizingImage;
+exports.default = imageProcessing;

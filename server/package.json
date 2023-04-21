@@ -30,7 +30,6 @@
     "jasmine-spec-reporter": "^7.0.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
-    "superset": "^2.0.1",
     "supertest": "^6.3.3",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"

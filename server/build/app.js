@@ -7,10 +7,12 @@ var path_1 = __importDefault(require("path"));
 var cors_1 = __importDefault(require("cors"));
 var helmet_1 = __importDefault(require("helmet"));
 var express_1 = __importDefault(require("express"));
+var resizeImg_1 = __importDefault(require("./resizeImg"));
 // Create Express server
 var app = (0, express_1.default)();
 app.use((0, helmet_1.default)());
 // Middleware to allow cross-origin requests
 app.use((0, cors_1.default)());
+app.use((0, resizeImg_1.default)());
 app.use(express_1.default.static(path_1.default.join(__dirname, '..', 'client')));
 exports.default = app;

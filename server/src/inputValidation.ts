@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import path from 'path';
-import sharp from 'sharp';
+import { resizeImage } from './imageResizing';
 
 function resizingImage() {
     // Create a new Map to store the cache
@@ -46,33 +46,14 @@ function resizingImage() {
         // Log file name and extension
         console.log(`Filename: ${name}.${ext}`);
 
+        // Path to the output file
+        const outputFile = `${imgFolder}/thumb/${name}-${width}x${height}.${ext}`;
+
+        // Path to the input file
+        const inputFile = `${imgFolder}/${file}`;
+
         try {
-            // Path to the output file
-            const outputFile = `${imgFolder}/thumb/${name}-${width}x${height}.${ext}`;
-
-            // Path to the input file
-            const inputFile = `${imgFolder}/${file}`;
-
-            // Sharp instance to resize the image
-            const sharpInstance: sharp.Sharp = sharp(inputFile).resize(width, height, {
-                fit: sharp.fit.cover,
-                withoutEnlargement: true,
-            });
-
-            // Convert image to correct file format and save to output file
-            if (ext === 'jpg') {
-                await sharpInstance.jpeg().sharpen().toFile(outputFile);
-            } else if (ext === 'jpeg') {
-                await sharpInstance.jpeg().sharpen().toFile(outputFile);
-            } else if (ext === 'png') {
-                await sharpInstance.png().sharpen().toFile(outputFile);
-            } else if (ext === 'webp') {
-                await sharpInstance.webp().sharpen().toFile(outputFile);
-            } else {
-                console.error(`Error: ${ext} is an unsupported file format`);
-                res.status(404).send(`Error: ${ext} is an unsupported file format`);
-                return;
-            }
+            await resizeImage(inputFile, outputFile, width, height, ext);
 
             // Log the image details after resizing
             console.log(`Image Resized!\nWidth: ${width}px\nHeight: ${height}px\nFormat: ${ext}`);

@@ -1,7 +1,7 @@
 import app from './app';
 import http from 'http';
 import express from 'express';
-import resizingImage from './resizeImg';
+import resizingImage from './inputValidation';
 import { Request, Response } from 'express';
 
 const PORT = process.env.PORT || 3000;
