@@ -1,3 +1,4 @@
+import fs from "fs";
 import path from 'path';
 import { Request, Response } from 'express';
 import { validateInput } from './validation';
@@ -8,6 +9,7 @@ function resizingImage() {
     const imageCache = new Map();
 
     return async (req: Request, res: Response) => {
+
         // Create a cache key
         const cacheKey = `${req.query.filename}-${req.query.width}-${req.query.height}`;
 
@@ -41,6 +43,11 @@ function resizingImage() {
 
         // Log file name and extension
         console.log(`Filename: ${name}.${ext}`);
+
+        // If thumbs folder does not exist, create it
+        if (!fs.existsSync(path.join(__dirname, '../../images/thumb'))) {
+            fs.mkdirSync(path.join(__dirname, '../../images/thumb'));
+        }
 
         // Path to the output file
         const outputFile = `${imgFolder}/thumb/${name}-${width}x${height}.${ext}`;

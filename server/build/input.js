@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var validation_1 = require("./validation");
 var imageResizing_1 = require("./imageResizing");
@@ -74,6 +75,10 @@ function resizingImage() {
                     imgFolder = path_1.default.join(__dirname, '../../images');
                     // Log file name and extension
                     console.log("Filename: ".concat(name, ".").concat(ext));
+                    // If thumbs folder does not exist, create it
+                    if (!fs_1.default.existsSync(path_1.default.join(__dirname, '../../images/thumb'))) {
+                        fs_1.default.mkdirSync(path_1.default.join(__dirname, '../../images/thumb'));
+                    }
                     outputFile = "".concat(imgFolder, "/thumb/").concat(name, "-").concat(width, "x").concat(height, ".").concat(ext);
                     inputFile = "".concat(imgFolder, "/").concat(file);
                     _b.label = 2;
