@@ -59,7 +59,7 @@ function resizingImage() {
             await imageCache.set(cacheKey, outputFile);
 
             // Send the image to the client
-            res.send(outputFile);
+            res.sendFile(outputFile);
             console.log('Image added to cache..');
             return;
         } catch (error) {

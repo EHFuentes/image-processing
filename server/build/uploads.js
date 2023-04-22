@@ -12,5 +12,6 @@ var fileStorage = multer_1.default.diskStorage({
         cb(null, file.originalname);
     },
 });
+// uploads image to server to localhost:3000/uploads
 var upload = (0, multer_1.default)({ storage: fileStorage });
 exports.default = upload;
