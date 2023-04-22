@@ -40,19 +40,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resizeImage = void 0;
-var fs_1 = __importDefault(require("fs"));
 var sharp_1 = __importDefault(require("sharp"));
-var path_1 = __importDefault(require("path"));
 function resizeImage(inputFile, outputFile, width, height, ext) {
     return __awaiter(this, void 0, void 0, function () {
-        var outputDir, sharpInstance, fileFormats, format;
+        var sharpInstance, fileFormats, format;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    outputDir = path_1.default.dirname(outputFile);
-                    if (!fs_1.default.existsSync(outputDir)) {
-                        fs_1.default.mkdirSync(outputDir, { recursive: true });
-                    }
                     sharpInstance = (0, sharp_1.default)(inputFile).resize(width, height, {
                         fit: sharp_1.default.fit.cover,
                         withoutEnlargement: true,

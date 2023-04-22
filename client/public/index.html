@@ -8,37 +8,37 @@
 </head>
 <body>
 <h1>Resize Images into Thumbnails</h1>
-    <div class="drop_file_box">
-        <p class ="p_class">Only .jpg, .jpeg, .png, .webp files will be processed.</p>
+<div class="drop_file_box">
+    <p class ="p_class">Only .jpg, .jpeg, .png, .webp files will be processed.</p>
 
-        <form class="form" id="upload-form"
-              action="/api/images"
-              method="POST"
-              enctype="multipart/form-data">
+    <form class="form" id="upload-form"
+          action="/api/images"
+          method="POST"
+          enctype="multipart/form-data">
 
-            <input class="file_button" id="myFile"
-                   type="file"
-                   name="filename"
-                   accept="image/jpeg/*, image/png/*, image/webp/*, image/jpg/*">
+        <input class="file_button" id="myFile"
+               type="file"
+               name="filename"
+               accept="image/jpeg/*, image/png/*, image/webp/*, image/jpg/*">
 
-            <div class="dimensions">
-                <input class="input_v" id="width"
-                       type="number"
-                       name="width"
-                       placeholder="Width.."
-                       min="1"
-                       required>
-                <input class="input_v" id="height"
-                       type="number"
-                       name="height"
-                       placeholder="Height.."
-                       min="1"
-                       required>
-            </div>
+        <div class="dimensions">
+            <input class="input_v" id="width"
+                   type="number"
+                   name="width"
+                   placeholder="Width.."
+                   min="1"
+                   required>
+            <input class="input_v" id="height"
+                   type="number"
+                   name="height"
+                   placeholder="Height.."
+                   min="1"
+                   required>
+        </div>
 
-            <button class="submit_button" id="submit" type="submit"> Submit</button>
-        </form>
-    </div>
-    <script src="../src/index.js"></script>
+        <button class="submit_button" id="submit" type="submit"> Submit</button>
+    </form>
+</div>
+<script src="../src/index.js"></script>
 </body>
 </html>

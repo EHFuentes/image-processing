@@ -1,7 +1,7 @@
 body {
     display: grid;
     justify-content: center;
-    background-color: #f8fafc;
+    background-color: #f5f8ff;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -11,7 +11,7 @@ h1 {
     font-size: 50px;
     font-weight: 100;
     color: #2563eb;
-    margin-top: 20%;
+    margin-top: 10%;
 }
 
 p {

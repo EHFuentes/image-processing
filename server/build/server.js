@@ -47,7 +47,6 @@ var PORT = process.env.PORT || 3000;
 // Middleware
 app_1.default.use('/api/images', (0, input_1.default)());
 app_1.default.use('/api/images', express_1.default.static('assets/thumbs', { maxAge: '1d' }));
-app_1.default.post('/resize', (0, input_1.default)());
 app_1.default.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         res.send('Server started.');
