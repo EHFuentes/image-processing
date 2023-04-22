@@ -38,7 +38,7 @@ To run the test, run npm test from the server directory.
 
 If testing with url and not the front end the file extension must be included in the url.
 
-e.g. ```http://localhost:3000/api/images?filename=fjord.jpg&width=200&height=200``
+e.g. ```http://localhost:3000/api/images?filename=fjord.jpg&width=200&height=200```
 
 ## Dependencies
 - @types/cors - ^2.8.13
